@@ -9,7 +9,7 @@ In this project, you can build your own C++ application starting with this repo,
 <img src="terrains/unnamed.jpg"/>
 
 ## Dependencies for Running Locally
-* cmake >= 2.8
+* cmake >= 3.11.3
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
 * make >= 4.1 (Linux, Mac), 3.81 (Windows)
   * Linux: make is installed by default on most Linux distros
