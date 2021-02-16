@@ -3,7 +3,8 @@
 
 // child of Static class
 // objects of this class represent the pile of items for nanobots to retrieve
-class Pile : public Static {
+class Pile : public Entity, public Static 
+{
 public:
     // METHODS
     Pile(); // Constructor

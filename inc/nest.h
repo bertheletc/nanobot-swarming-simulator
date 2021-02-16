@@ -3,7 +3,8 @@
 
 // child of Static class
 // objects of this class represent the nest where nanobots go from and come back to
-class Nest : public Static {
+class Nest : public Entity, public Static
+{
 public:
     // METHODS
     Nest(); // Constructor

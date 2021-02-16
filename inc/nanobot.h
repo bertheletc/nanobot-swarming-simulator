@@ -1,11 +1,17 @@
 #ifndef NANOBOT_H
 #define NANOBOT_H
 
-enum class BotMode {kNesting, kSearching, kReturning}; // 
+enum BotMode 
+{
+    kNesting, 
+    kSearching, 
+    kReturning,
+}; // 
 
 // child of Static class
 // objects of this class represent an individual nanobot
-class Nanobot : public Dynamic {
+class Nanobot : public Entity, public Dynamic 
+{
 public:
     // Constructor
     Nanobot();

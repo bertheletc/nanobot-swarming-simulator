@@ -3,7 +3,8 @@
 
 // child of Static class
 // objects of this class represent the obstacles nanobots must avoid
-class Obstacle : public Static {
+class Obstacle : public Entity, public Static 
+{
 public:
     // METHODS
     // Constructor
