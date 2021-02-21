@@ -6,7 +6,7 @@
 
 // child of Dynamic class
 // objects of this class represent the moving predators that can kill nanobots
-class Predator: public Entity, public Dynamic 
+class Predator: public Entity
 {
 public:
     // Constructor

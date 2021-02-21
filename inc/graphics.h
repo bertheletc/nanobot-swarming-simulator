@@ -5,14 +5,16 @@
 #include <vector>
 #include <opencv2/core.hpp>
 
+#include "entity.h"
+
 class Graphics
 {
 public:
     // constructor / desctructor
 
     // getters / setters
-    void setBgFilename(std::string filename) { _bgFilename = filename; }
-    //void setTrafficObjects(std::vector<std::shared_ptr<TrafficObject>> &trafficObjects) { _trafficObjects = trafficObjects; };
+    void setWorldFilename(std::string filename) { _worldFilename = filename; }
+    void setEntities(std::vector<std::shared_ptr<Entity>> &entities) { _entities = entities; };
 
     // typical behaviour methods
     void simulate();
@@ -23,8 +25,8 @@ private:
     void drawTrafficObjects();
 
     // member variables
-    //std::vector<std::shared_ptr<TrafficObject>> _trafficObjects;
-    std::string _bgFilename;
+    std::vector<std::shared_ptr<Entity>> _entities;
+    std::string _worldFilename;
     std::string _windowName;
     std::vector<cv::Mat> _images;
 };

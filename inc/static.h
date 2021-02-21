@@ -9,7 +9,7 @@ public:
     Static() {}; // Constructor
     
 protected:
-    virtual double bias() const = 0; // method to be overriden by each child class
+    virtual double bias(){}; // method to be overriden by each child class
 };
 
 #endif

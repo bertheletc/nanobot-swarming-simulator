@@ -1,6 +1,9 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <vector>
+#include <thread>
+
 // forward declaration
 class World;
 
@@ -31,7 +34,7 @@ class Entity
 public:
     // // METHODS
     Entity(); // Constructor
-    ~Entity();
+    ~Entity(); // Destructor
 
     // getter and setter
     int getID() { return _id; }
@@ -49,6 +52,7 @@ protected:
     World *world; // pointer to instance of World that the Static object belongs to
     Color color; // rendered color of object
     float sizeRadius; // represents the size of the object (all objects are circles) 
+    std::vector<std::thread> threads; // holds all threads that have been launched within this object
 
     // // ???
     // std::vector<std::thread> threads; // holds all threads that have been launched within this object

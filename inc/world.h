@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <vector>
+#include <thread>
 
 #include "static.h"
 #include "nest.h"
@@ -14,7 +15,13 @@
 class World {
 public:
     // Constructor
-    World();
+    World(std::vector<std::shared_ptr<Nest>> &nests, 
+          std::vector<std::shared_ptr<Obstacle>> &obstacles, 
+          std::vector<std::shared_ptr<Pile>> &piles, 
+          std::vector<std::shared_ptr<Nanobot>> &nanobots, 
+          std::vector<std::shared_ptr<Predator>> &predators,
+          std::vector<int> &entityQuantity);
+    
     void findOpenSpaces();
     void display();
 
@@ -23,9 +30,9 @@ private:
     std::vector<std::vector<int>> _openSpaces;
 
     int _numNests;
-    int _numBots; // number of nanobots in the simulation
     int _numObstacles;
     int _numPiles;
+    int _numBots; // number of nanobots in the simulation
     int _numPredators;
 };
 

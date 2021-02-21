@@ -8,6 +8,7 @@ CMakeFiles/nanobot_simulation.dir/src/entity.cpp.o
  ../inc/entity.h
  /home/bertheletc/git/nanobot-swarming-simulator/src/entity.cpp
 CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o
+ ../inc/entity.h
  ../inc/graphics.h
  /home/bertheletc/git/nanobot-swarming-simulator/src/graphics.cpp
  /usr/local/include/opencv4/opencv2/core.hpp
@@ -46,7 +47,6 @@ CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o
  /usr/local/include/opencv4/opencv2/opencv_modules.hpp
  /usr/local/include/opencv4/opencv2/videoio.hpp
 CMakeFiles/nanobot_simulation.dir/src/nanobot.cpp.o
- ../inc/dynamic.h
  ../inc/entity.h
  ../inc/nanobot.h
  /home/bertheletc/git/nanobot-swarming-simulator/src/nanobot.cpp
@@ -73,6 +73,7 @@ CMakeFiles/nanobot_simulation.dir/src/predator.cpp.o
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o
  ../inc/dynamic.h
  ../inc/entity.h
+ ../inc/graphics.h
  ../inc/nanobot.h
  ../inc/nest.h
  ../inc/obstacle.h
@@ -81,6 +82,36 @@ CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o
  ../inc/static.h
  ../inc/world.h
  /home/bertheletc/git/nanobot-swarming-simulator/src/simulator.cpp
+ /usr/local/include/opencv4/opencv2/core.hpp
+ /usr/local/include/opencv4/opencv2/core/base.hpp
+ /usr/local/include/opencv4/opencv2/core/bufferpool.hpp
+ /usr/local/include/opencv4/opencv2/core/check.hpp
+ /usr/local/include/opencv4/opencv2/core/cv_cpu_dispatch.h
+ /usr/local/include/opencv4/opencv2/core/cv_cpu_helper.h
+ /usr/local/include/opencv4/opencv2/core/cvdef.h
+ /usr/local/include/opencv4/opencv2/core/cvstd.hpp
+ /usr/local/include/opencv4/opencv2/core/cvstd.inl.hpp
+ /usr/local/include/opencv4/opencv2/core/cvstd_wrapper.hpp
+ /usr/local/include/opencv4/opencv2/core/fast_math.hpp
+ /usr/local/include/opencv4/opencv2/core/hal/interface.h
+ /usr/local/include/opencv4/opencv2/core/hal/msa_macros.h
+ /usr/local/include/opencv4/opencv2/core/mat.hpp
+ /usr/local/include/opencv4/opencv2/core/mat.inl.hpp
+ /usr/local/include/opencv4/opencv2/core/matx.hpp
+ /usr/local/include/opencv4/opencv2/core/neon_utils.hpp
+ /usr/local/include/opencv4/opencv2/core/operations.hpp
+ /usr/local/include/opencv4/opencv2/core/optim.hpp
+ /usr/local/include/opencv4/opencv2/core/ovx.hpp
+ /usr/local/include/opencv4/opencv2/core/persistence.hpp
+ /usr/local/include/opencv4/opencv2/core/saturate.hpp
+ /usr/local/include/opencv4/opencv2/core/traits.hpp
+ /usr/local/include/opencv4/opencv2/core/types.hpp
+ /usr/local/include/opencv4/opencv2/core/utility.hpp
+ /usr/local/include/opencv4/opencv2/core/utils/instrumentation.hpp
+ /usr/local/include/opencv4/opencv2/core/utils/tls.hpp
+ /usr/local/include/opencv4/opencv2/core/version.hpp
+ /usr/local/include/opencv4/opencv2/core/vsx_utils.hpp
+ /usr/local/include/opencv4/opencv2/opencv_modules.hpp
 CMakeFiles/nanobot_simulation.dir/src/static.cpp.o
  ../inc/static.h
  /home/bertheletc/git/nanobot-swarming-simulator/src/static.cpp

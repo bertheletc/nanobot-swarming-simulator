@@ -2,7 +2,6 @@
 #define NANOBOT_H
 
 #include "entity.h"
-#include "dynamic.h"
 
 enum BotMode 
 {
@@ -13,7 +12,7 @@ enum BotMode
 
 // child of Static class
 // objects of this class represent an individual nanobot
-class Nanobot : public Entity, public Dynamic 
+class Nanobot : public Entity
 {
 public:
     // Constructor

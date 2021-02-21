@@ -7,6 +7,7 @@ CMakeFiles/nanobot_simulation.dir/src/dynamic.cpp.o: ../src/dynamic.cpp
 CMakeFiles/nanobot_simulation.dir/src/entity.cpp.o: ../inc/entity.h
 CMakeFiles/nanobot_simulation.dir/src/entity.cpp.o: ../src/entity.cpp
 
+CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o: ../inc/entity.h
 CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o: ../inc/graphics.h
 CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o: ../src/graphics.cpp
 CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o: /usr/local/include/opencv4/opencv2/core.hpp
@@ -45,7 +46,6 @@ CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o: /usr/local/include/opencv4
 CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o: /usr/local/include/opencv4/opencv2/opencv_modules.hpp
 CMakeFiles/nanobot_simulation.dir/src/graphics.cpp.o: /usr/local/include/opencv4/opencv2/videoio.hpp
 
-CMakeFiles/nanobot_simulation.dir/src/nanobot.cpp.o: ../inc/dynamic.h
 CMakeFiles/nanobot_simulation.dir/src/nanobot.cpp.o: ../inc/entity.h
 CMakeFiles/nanobot_simulation.dir/src/nanobot.cpp.o: ../inc/nanobot.h
 CMakeFiles/nanobot_simulation.dir/src/nanobot.cpp.o: ../src/nanobot.cpp
@@ -72,6 +72,7 @@ CMakeFiles/nanobot_simulation.dir/src/predator.cpp.o: ../src/predator.cpp
 
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/dynamic.h
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/entity.h
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/graphics.h
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/nanobot.h
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/nest.h
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/obstacle.h
@@ -80,6 +81,36 @@ CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/predator.h
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/static.h
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../inc/world.h
 CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: ../src/simulator.cpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/base.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/bufferpool.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/check.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/cv_cpu_dispatch.h
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/cv_cpu_helper.h
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/cvdef.h
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/cvstd.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/cvstd.inl.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/cvstd_wrapper.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/fast_math.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/hal/interface.h
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/hal/msa_macros.h
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/mat.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/mat.inl.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/matx.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/neon_utils.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/operations.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/optim.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/ovx.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/persistence.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/saturate.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/traits.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/types.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/utility.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/utils/instrumentation.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/utils/tls.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/version.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/core/vsx_utils.hpp
+CMakeFiles/nanobot_simulation.dir/src/simulator.cpp.o: /usr/local/include/opencv4/opencv2/opencv_modules.hpp
 
 CMakeFiles/nanobot_simulation.dir/src/static.cpp.o: ../inc/static.h
 CMakeFiles/nanobot_simulation.dir/src/static.cpp.o: ../src/static.cpp
