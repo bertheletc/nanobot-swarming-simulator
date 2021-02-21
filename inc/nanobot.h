@@ -1,6 +1,9 @@
 #ifndef NANOBOT_H
 #define NANOBOT_H
 
+#include "entity.h"
+#include "dynamic.h"
+
 enum BotMode 
 {
     kNesting, 
@@ -15,12 +18,12 @@ class Nanobot : public Entity, public Dynamic
 public:
     // Constructor
     Nanobot();
-    double move() override; // overriden function to calculate movement
+    //double move() override; // overriden function to calculate movement
     void killed();
 
 private:
     BotMode _mode;
     float _range;
-}
+};
 
 #endif

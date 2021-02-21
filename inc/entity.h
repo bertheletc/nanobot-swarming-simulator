@@ -1,10 +1,12 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "world.h"
+// forward declaration
+class World;
 
 enum EntityType
 {
+    none,
     nanobot,
     nest,
     obstacle,
@@ -24,18 +26,18 @@ enum Color
 }; //
 
 // abstract parent of Obstacle, Nest, and Heap classes
-class Entity 
+class Entity
 {
 public:
-    // METHODS
+    // // METHODS
     Entity(); // Constructor
-    ~Entity(); // Destructor
+    ~Entity();
 
     // getter and setter
     int getID() { return _id; }
     void setPosition(double x, double y);
     void getPosition(double &x, double &y);
-    ObjectType getType() { return _type; }
+    EntityType getType() { return _type; }
 
     virtual void simulate(){}; // method to be overriden by each child class
 
@@ -48,14 +50,14 @@ protected:
     Color color; // rendered color of object
     float sizeRadius; // represents the size of the object (all objects are circles) 
 
-    // ???
-    std::vector<std::thread> threads; // holds all threads that have been launched within this object
-    static std::mutex _mtx;           // mutex shared by all traffic objects for protecting cout 
+    // // ???
+    // std::vector<std::thread> threads; // holds all threads that have been launched within this object
+    // static std::mutex _mtx;           // mutex shared by all traffic objects for protecting cout 
 
 private:
     // ???
     static int _idCnt; // global variable for counting object ids
     
-}
+};
 
 #endif

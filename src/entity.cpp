@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 #include "entity.h"
 
@@ -9,7 +10,7 @@
 // init static variable
 int Entity::_idCnt = 0;
 
-std::mutex Entity::_mtx;
+//std::mutex Entity::_mtx;
 
 void Entity::setPosition(double x, double y)
 {
@@ -25,14 +26,14 @@ void Entity::getPosition(double &x, double &y)
 
 Entity::Entity()
 {
-    _type = ObjectType::noObject;
+    _type = EntityType::none;
     _id = _idCnt++;
 }
 
 Entity::~Entity()
 {
-    // set up thread barrier before this object is destroyed
-    std::for_each(threads.begin(), threads.end(), [](std::thread &t) {
-        t.join();
-    });
+    // // set up thread barrier before this object is destroyed
+    // std::for_each(threads.begin(), threads.end(), [](std::thread &t) {
+    //     t.join();
+    // });
 }

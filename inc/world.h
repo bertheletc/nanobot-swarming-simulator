@@ -19,14 +19,14 @@ public:
     void display();
 
 private:
-    vector<int> _size; // [x,y] base * height in pixels
-    vector<vector<int>> _openSpaces;
+    std::vector<int> _size; // [x,y] base * height in pixels
+    std::vector<std::vector<int>> _openSpaces;
 
-    int _numNests
+    int _numNests;
     int _numBots; // number of nanobots in the simulation
     int _numObstacles;
     int _numPiles;
     int _numPredators;
-}
+};
 
 #endif

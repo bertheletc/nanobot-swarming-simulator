@@ -1,0 +1,3 @@
+/home/bertheletc/git/nanobot-swarming-simulator/build/CMakeFiles/rebuild_cache.dir
+/home/bertheletc/git/nanobot-swarming-simulator/build/CMakeFiles/nanobot_simulation.dir
+/home/bertheletc/git/nanobot-swarming-simulator/build/CMakeFiles/edit_cache.dir
