@@ -48,19 +48,19 @@ void Graphics::drawTrafficObjects()
         {
             cv::RNG rng(it->getID());
             cv::Scalar color = cv::Scalar(0,128,255); // ORANGE (b,g,r)
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 10, color, -1);
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 40, color, -1);
         }
         else if (it->getType() == EntityType::obstacle)
         {
             cv::RNG rng(it->getID());
-            cv::Scalar color = cv::Scalar(0,255,255); // YELLOW (b,g,r)
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 10, color, -1);
+            cv::Scalar color = cv::Scalar(0,0,0); // BLACK (b,g,r)
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 30, color, -1);
         }
         else if (it->getType() == EntityType::pile)
         {
             cv::RNG rng(it->getID());
-            cv::Scalar color = cv::Scalar(0,0,0); // BLACK (b,g,r)
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 10, color, -1);
+            cv::Scalar color = cv::Scalar(0,255,255); // YELLOW (b,g,r)
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 40, color, -1);
         }
         else if (it->getType() == EntityType::nanobot)
         {
