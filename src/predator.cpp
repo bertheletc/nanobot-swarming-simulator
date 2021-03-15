@@ -2,5 +2,5 @@
 
 Predator::Predator()
 {
-    _type = EntityType::predator;
+    _type = EntityType::kPredator;
 }

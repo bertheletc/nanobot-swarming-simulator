@@ -26,7 +26,7 @@ void Entity::getPosition(double &x, double &y)
 
 Entity::Entity()
 {
-    _type = EntityType::none;
+    _type = EntityType::kNone;
     _id = _idCnt++;
 }
 

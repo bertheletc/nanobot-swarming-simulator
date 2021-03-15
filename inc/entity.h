@@ -9,12 +9,12 @@ class World;
 
 enum EntityType
 {
-    none,
-    nanobot,
-    nest,
-    obstacle,
-    pile,
-    predator,
+    kNone,
+    kNanobot,
+    kNest,
+    kObstacle,
+    kPile,
+    kPredator,
 };
 
 enum Color 

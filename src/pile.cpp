@@ -2,5 +2,5 @@
 
 Pile::Pile()
 {
-    _type = EntityType::pile;
+    _type = EntityType::kPile;
 }

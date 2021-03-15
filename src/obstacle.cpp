@@ -2,5 +2,5 @@
 
 Obstacle::Obstacle()
 {
-    _type = EntityType::obstacle;
+    _type = EntityType::kObstacle;
 }

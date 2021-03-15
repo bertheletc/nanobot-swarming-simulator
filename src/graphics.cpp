@@ -30,6 +30,10 @@ void Graphics::loadBackgroundImg()
     _images.push_back(background);         // first element is the original background
     _images.push_back(background.clone()); // second element will be the transparent overlay
     _images.push_back(background.clone()); // third element will be the result image for display
+
+    std::cout << "World Size" << std::endl;
+    std::cout << "Width : " << background.size().width << " pixels" << std::endl;
+    std::cout << "Height: " << background.size().height << " pixels" << std::endl;
 }
 
 void Graphics::drawTrafficObjects()
@@ -44,31 +48,31 @@ void Graphics::drawTrafficObjects()
         double posx, posy;
         it->getPosition(posx, posy);
 
-        if (it->getType() == EntityType::nest)
+        if (it->getType() == EntityType::kNest)
         {
             cv::RNG rng(it->getID());
             cv::Scalar color = cv::Scalar(0,128,255); // ORANGE (b,g,r)
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 40, color, -1);
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 100, color, -1);
         }
-        else if (it->getType() == EntityType::obstacle)
+        else if (it->getType() == EntityType::kObstacle)
         {
             cv::RNG rng(it->getID());
             cv::Scalar color = cv::Scalar(0,0,0); // BLACK (b,g,r)
             cv::circle(_images.at(1), cv::Point2d(posx, posy), 30, color, -1);
         }
-        else if (it->getType() == EntityType::pile)
+        else if (it->getType() == EntityType::kPile)
         {
             cv::RNG rng(it->getID());
             cv::Scalar color = cv::Scalar(0,255,255); // YELLOW (b,g,r)
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 40, color, -1);
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 50, color, -1);
         }
-        else if (it->getType() == EntityType::nanobot)
+        else if (it->getType() == EntityType::kNanobot)
         {
             cv::RNG rng(it->getID());
             cv::Scalar color = cv::Scalar(255,0,0); // BLUE (b,g,r)
             cv::circle(_images.at(1), cv::Point2d(posx, posy), 10, color, -1);
         }
-        else if (it->getType() == EntityType::predator)
+        else if (it->getType() == EntityType::kPredator)
         {
             cv::RNG rng(it->getID());
             cv::Scalar color = cv::Scalar(0,0,255); // RED (b,g,r)

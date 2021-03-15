@@ -4,6 +4,9 @@
 #include <vector>
 #include <string>
 #include <thread>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
 
 #include "world.h"
 #include "static.h"
@@ -15,11 +18,60 @@
 #include "predator.h"
 #include "graphics.h"
 
-World *simWorld;
 // GUI placeholder
 int iterations;
 
 bool checkComplete(){};
+
+void generateEntities(std::vector<std::shared_ptr<Nest>> &nests, 
+          std::vector<std::shared_ptr<Obstacle>> &obstacles, 
+          std::vector<std::shared_ptr<Pile>> &piles, 
+          std::vector<std::shared_ptr<Predator>> &predators,
+          std::vector<int> &entityQuantity)
+{
+
+    for (size_t nn = 0; nn < entityQuantity[0]; nn++)
+    {
+        nests.push_back(std::make_shared<Nest>());
+    }
+
+    // position intersections in pixel coordinates
+    nests.at(0)->setPosition(100, 100);
+
+    for (size_t no = 0; no < entityQuantity[1]; no++)
+    {
+        obstacles.push_back(std::make_shared<Obstacle>());
+    }
+
+    // position intersections in pixel coordinates
+    obstacles.at(0)->setPosition(200, 300);
+    obstacles.at(1)->setPosition(300, 200);
+    obstacles.at(2)->setPosition(400, 500);
+    obstacles.at(3)->setPosition(500, 400);
+    obstacles.at(4)->setPosition(700, 700);
+    
+    for (size_t np = 0; np < entityQuantity[2]; np++)
+    {
+        piles.push_back(std::make_shared<Pile>());
+    }
+
+    // position intersections in pixel coordinates
+    piles.at(0)->setPosition(1200, 800);
+    
+    for (size_t npre = 0; npre < entityQuantity[3]; npre++)
+    {
+        predators.push_back(std::make_shared<Predator>());
+    }
+
+    // position intersections in pixel coordinates
+    predators.at(0)->setPosition(500, 500);
+    predators.at(1)->setPosition(600, 600);
+}
+
+void generateNanobots()
+{
+    return;
+}
 
 int main() {
 
@@ -35,18 +87,34 @@ int main() {
     std::vector<std::shared_ptr<Obstacle>> obstacles;
     std::vector<std::shared_ptr<Pile>> piles;
     // create dynamic entities to place in the world
-    std::vector<std::shared_ptr<Nanobot>> nanobots;
     std::vector<std::shared_ptr<Predator>> predators;
+    std::vector<std::shared_ptr<Nanobot>> nanobots;
 
     // TODO: Change to take in user specified numbers
     int nNests = 1;
     int nObstacles = 5;
     int nPiles = 1;
-    int nNanobots = 10;
     int nPredators = 2;
+    int nNanobots = 10;
+
+    // load image to extract pixel height and width
+    cv::Mat image = cv::imread(worldImg);
+    std::vector<int> worldSize;
+    worldSize.push_back(image.size().width);
+    worldSize.push_back(image.size().height);
     
-    std::vector<int> entityQuantity{nNests, nObstacles, nPiles, nNanobots, nPredators};
-    World world(nests, obstacles, piles, nanobots, predators, entityQuantity);
+    std::vector<int> entityQuantity{nNests, nObstacles, nPiles, nPredators};
+
+    generateEntities(nests, obstacles, piles, predators, entityQuantity);
+
+    // for (size_t nnan = 0; nnan < _numBots; nnan++)
+    // {
+    //     nanobots.push_back(std::make_shared<Nanobot>());
+    // }
+
+    // // position intersections in pixel coordinates
+    // nanobots.at(0)->setPosition(1000, 200);
+    // nanobots.at(1)->setPosition(200, 700);
 
     /* Simulate dynamic objects */
 
@@ -70,9 +138,6 @@ int main() {
         entities.push_back(entity);
     });
 
-    // std::shared_ptr<Entity> entity = std::dynamic_pointer_cast<Entity>(nests[0]);
-    // entities.push_back(entity);
-
     std::for_each(obstacles.begin(), obstacles.end(), [&entities](std::shared_ptr<Obstacle> &obstacle) {
         std::shared_ptr<Entity> entity = std::dynamic_pointer_cast<Entity>(obstacle);
         entities.push_back(entity);
@@ -83,13 +148,13 @@ int main() {
         entities.push_back(entity);
     });
 
+    std::for_each(predators.begin(), predators.end(), [&entities](std::shared_ptr<Predator> &predator) {
+        std::shared_ptr<Entity> entity = std::dynamic_pointer_cast<Entity>(predator);
+        entities.push_back(entity);
+    });
+
     // std::for_each(nanobots.begin(), nanobots.end(), [&entities](std::shared_ptr<Nanobot> &nanobot) {
     //     std::shared_ptr<Entity> entity = std::dynamic_pointer_cast<Entity>(nanobot);
-    //     entities.push_back(entity);
-    // });
-
-    // std::for_each(predators.begin(), predators.end(), [&entities](std::shared_ptr<Predator> &predator) {
-    //     std::shared_ptr<Entity> entity = std::dynamic_pointer_cast<Entity>(predator);
     //     entities.push_back(entity);
     // });
 

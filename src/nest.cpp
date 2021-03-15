@@ -2,5 +2,5 @@
 
 Nest::Nest()
 {
-    _type = EntityType::nest;
+    _type = EntityType::kNest;
 }
