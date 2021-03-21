@@ -8,7 +8,6 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 
-#include "world.h"
 #include "static.h"
 #include "nest.h"
 #include "obstacle.h"
@@ -68,9 +67,16 @@ void generateEntities(std::vector<std::shared_ptr<Nest>> &nests,
     predators.at(1)->setPosition(600, 600);
 }
 
-void generateNanobots()
+void generateNanobots(std::vector<std::shared_ptr<Nanobot>> &nanobots, int nNanobots, std::vector<int> worldSize)
 {
-    return;
+    for (int nnan = 0; nnan < nNanobots; nnan++)
+    {
+        nanobots.push_back(std::make_shared<Nanobot>(nnan, worldSize));
+    }
+
+    // position intersections in pixel coordinates
+    nanobots.at(0)->setPosition(1000, 200);
+    nanobots.at(1)->setPosition(200, 700);
 }
 
 int main() {
@@ -95,7 +101,7 @@ int main() {
     int nObstacles = 5;
     int nPiles = 1;
     int nPredators = 2;
-    int nNanobots = 10;
+    int nNanobots = 2;
 
     // load image to extract pixel height and width
     cv::Mat image = cv::imread(worldImg);
@@ -106,22 +112,14 @@ int main() {
     std::vector<int> entityQuantity{nNests, nObstacles, nPiles, nPredators};
 
     generateEntities(nests, obstacles, piles, predators, entityQuantity);
-
-    // for (size_t nnan = 0; nnan < _numBots; nnan++)
-    // {
-    //     nanobots.push_back(std::make_shared<Nanobot>());
-    // }
-
-    // // position intersections in pixel coordinates
-    // nanobots.at(0)->setPosition(1000, 200);
-    // nanobots.at(1)->setPosition(200, 700);
+    generateNanobots(nanobots, nNanobots, worldSize);
 
     /* Simulate dynamic objects */
 
-    // // simulate nanobots
-    // std::for_each(nanobots.begin(), nanobots.end(), [](std::shared_ptr<Nanobot> &i) {
-    //     i->simulate();
-    // });
+    // simulate nanobots
+    std::for_each(nanobots.begin(), nanobots.end(), [](std::shared_ptr<Nanobot> &i) {
+        i->simulate();
+    });
 
     // // simulate predators
     // std::for_each(predators.begin(), predators.end(), [](std::shared_ptr<Predator> &v) {
@@ -153,10 +151,10 @@ int main() {
         entities.push_back(entity);
     });
 
-    // std::for_each(nanobots.begin(), nanobots.end(), [&entities](std::shared_ptr<Nanobot> &nanobot) {
-    //     std::shared_ptr<Entity> entity = std::dynamic_pointer_cast<Entity>(nanobot);
-    //     entities.push_back(entity);
-    // });
+    std::for_each(nanobots.begin(), nanobots.end(), [&entities](std::shared_ptr<Nanobot> &nanobot) {
+        std::shared_ptr<Entity> entity = std::dynamic_pointer_cast<Entity>(nanobot);
+        entities.push_back(entity);
+    });
 
     // draw all objects in vector
     Graphics *graphics = new Graphics();

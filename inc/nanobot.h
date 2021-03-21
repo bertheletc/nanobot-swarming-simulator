@@ -10,24 +10,28 @@ enum BotMode
     kReturning,
 }; // 
 
-// child of Static class
+// child of Dynamic and Entity classes
 // objects of this class represent an individual nanobot
 class Nanobot : public Entity, public std::enable_shared_from_this<Nanobot>
 {
 public:
     // Constructor
-    Nanobot();
-    //double move() override; // overriden function to calculate movement
-    void killed();
-    void move();
+    Nanobot(int id, std::vector<int> worldSize);
     void simulate();
+    void move();
+    void killed();
 
     // miscellaneous
     std::shared_ptr<Nanobot> get_shared_this() { return shared_from_this(); }
 
 private:
+    void randMoveChoice(int &x, int &y);
+    std::vector<float> moveMatrix;
+    
     BotMode _mode;
     float _range;
+
+    std::vector<int> _worldSize;
 };
 
 #endif

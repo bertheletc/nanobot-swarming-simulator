@@ -45,7 +45,7 @@ void Graphics::drawTrafficObjects()
     // create overlay from all traffic objects
     for (auto it : _entities)
     {
-        double posx, posy;
+        int posx, posy;
         it->getPosition(posx, posy);
 
         if (it->getType() == EntityType::kNest)

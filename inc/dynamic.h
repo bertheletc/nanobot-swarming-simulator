@@ -9,8 +9,11 @@ public:
     Dynamic(); // Constructor
 
 protected:
-    virtual double move(){}; // method to be overriden by each child class
+    virtual void simulate(){}; // method to be overriden by each child class
+    virtual void move(){}; // method to be overriden by each child class
+    virtual void nextPosition(){};
     // TODO: decide whether these attributed are public or protected
+    //std::vector<float> moveMatrix;
 };
 
 #endif

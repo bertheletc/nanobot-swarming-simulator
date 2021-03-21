@@ -7,18 +7,20 @@
 
 /* Implementation of abstract class "Entity" */
 
+std::mutex Entity::_mtx;
+
 // init static variable
 int Entity::_idCnt = 0;
 
 //std::mutex Entity::_mtx;
 
-void Entity::setPosition(double x, double y)
+void Entity::setPosition(int x, int y)
 {
     _posX = x;
     _posY = y;
 }
 
-void Entity::getPosition(double &x, double &y)
+void Entity::getPosition(int &x, int &y)
 {
     x = _posX;
     y = _posY;
