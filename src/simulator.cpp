@@ -77,6 +77,14 @@ void generateNanobots(std::vector<std::shared_ptr<Nanobot>> &nanobots, int nNano
     // position intersections in pixel coordinates
     nanobots.at(0)->setPosition(1000, 200);
     nanobots.at(1)->setPosition(200, 700);
+    nanobots.at(2)->setPosition(1000, 200);
+    nanobots.at(3)->setPosition(200, 700);
+    nanobots.at(4)->setPosition(1000, 200);
+    nanobots.at(5)->setPosition(200, 700);
+    nanobots.at(6)->setPosition(1000, 200);
+    nanobots.at(7)->setPosition(200, 700);
+    nanobots.at(8)->setPosition(1000, 200);
+    nanobots.at(9)->setPosition(200, 700);
 }
 
 int main() {
@@ -101,7 +109,7 @@ int main() {
     int nObstacles = 5;
     int nPiles = 1;
     int nPredators = 2;
-    int nNanobots = 2;
+    int nNanobots = 10;
 
     // load image to extract pixel height and width
     cv::Mat image = cv::imread(worldImg);

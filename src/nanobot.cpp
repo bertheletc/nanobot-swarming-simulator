@@ -26,23 +26,9 @@ void Nanobot::simulate()
 
 void Nanobot::move()
 {
-    // while (true)
-    // {
-    //     // print id of the current thread
-    //     std::unique_lock<std::mutex> lck(_mtx);
-    //     std::cout << "Nanobot #" << _id << "::drive: thread id = " << std::this_thread::get_id() << std::endl;
-    //     lck.unlock();
-        
-    //     // sleep at every iteration to reduce CPU usage
-    //     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    // }
-    
     // initalize variables
     double cycleDuration = 1000; // duration of a single simulation cycle in ms
-    std::chrono::time_point<std::chrono::system_clock> lastUpdate;
 
-    // init stop watch
-    lastUpdate = std::chrono::system_clock::now();
     while (true)
     {
         // print id of the current thread
@@ -51,35 +37,17 @@ void Nanobot::move()
         lck.unlock();
 
         int x, y;
-        randMoveChoice(x,y);
-        this->setPosition(x,y);
-        
+        while(true)
+        {
+            randMoveChoice(x,y);
+            if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
+            {
+                this->setPosition(x,y);
+                break;
+            }
+        }
         // sleep at every iteration to reduce CPU usage
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
-        // // compute time difference to stop watch
-        // long timeSinceLastUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - lastUpdate).count();
-    
-        // if (timeSinceLastUpdate >= cycleDuration)
-        // {
-            
-        //     // print id of the current thread
-        //     std::unique_lock<std::mutex> lck(_mtx);
-        //     std::cout << "Nanobot #" << _id << "::drive: thread id = " << std::this_thread::get_id() << std::endl;
-        //     lck.unlock();
-        //     // int x, y;
-        //     // while(true)
-        //     // {
-        //     //     randMoveChoice(x,y);
-        //     //     if (x >= _worldSize[0] && x <= _worldSize[0] && y >= _worldSize[1] && y <= _worldSize[1])
-        //     //     {
-        //     //         this->setPosition(x,y);
-        //     //         break;
-        //     //     }
-        //     // }
-        // }
-        // // reset stop watch for next cycle
-        // lastUpdate = std::chrono::system_clock::now();
     }
 }
 
