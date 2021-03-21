@@ -22,14 +22,13 @@ int iterations;
 
 bool checkComplete(){};
 
-void generateEntities(std::vector<std::shared_ptr<Nest>> &nests, 
+void generateStaticEntities(std::vector<std::shared_ptr<Nest>> &nests, 
           std::vector<std::shared_ptr<Obstacle>> &obstacles, 
-          std::vector<std::shared_ptr<Pile>> &piles, 
-          std::vector<std::shared_ptr<Predator>> &predators,
-          std::vector<int> &entityQuantity)
+          std::vector<std::shared_ptr<Pile>> &piles,
+          std::vector<int> &staticEntityQuantity)
 {
 
-    for (size_t nn = 0; nn < entityQuantity[0]; nn++)
+    for (int nn = 0; nn < staticEntityQuantity[0]; nn++)
     {
         nests.push_back(std::make_shared<Nest>());
     }
@@ -37,7 +36,7 @@ void generateEntities(std::vector<std::shared_ptr<Nest>> &nests,
     // position intersections in pixel coordinates
     nests.at(0)->setPosition(100, 100);
 
-    for (size_t no = 0; no < entityQuantity[1]; no++)
+    for (int no = 0; no < staticEntityQuantity[1]; no++)
     {
         obstacles.push_back(std::make_shared<Obstacle>());
     }
@@ -49,42 +48,46 @@ void generateEntities(std::vector<std::shared_ptr<Nest>> &nests,
     obstacles.at(3)->setPosition(500, 400);
     obstacles.at(4)->setPosition(700, 700);
     
-    for (size_t np = 0; np < entityQuantity[2]; np++)
+    for (int np = 0; np < staticEntityQuantity[2]; np++)
     {
         piles.push_back(std::make_shared<Pile>());
     }
 
     // position intersections in pixel coordinates
     piles.at(0)->setPosition(1200, 800);
-    
-    for (size_t npre = 0; npre < entityQuantity[3]; npre++)
+}
+
+void generateDynamicEntities(std::vector<std::shared_ptr<Predator>> &predators,
+                             std::vector<std::shared_ptr<Nanobot>> &nanobots,
+                             std::vector<int> &dynamicEntityQuantity,
+                             std::vector<int> worldSize)
+{
+    for (int npre = 0; npre < dynamicEntityQuantity[0]; npre++)
     {
-        predators.push_back(std::make_shared<Predator>());
+        predators.push_back(std::make_shared<Predator>(npre, worldSize));
     }
 
     // position intersections in pixel coordinates
     predators.at(0)->setPosition(500, 500);
     predators.at(1)->setPosition(600, 600);
-}
-
-void generateNanobots(std::vector<std::shared_ptr<Nanobot>> &nanobots, int nNanobots, std::vector<int> worldSize)
-{
-    for (int nnan = 0; nnan < nNanobots; nnan++)
+    
+    for (int nnan = 0; nnan < dynamicEntityQuantity[1]; nnan++)
     {
         nanobots.push_back(std::make_shared<Nanobot>(nnan, worldSize));
+        nanobots.at(nnan)->setPosition(100, 100);
     }
 
-    // position intersections in pixel coordinates
-    nanobots.at(0)->setPosition(1000, 200);
-    nanobots.at(1)->setPosition(200, 700);
-    nanobots.at(2)->setPosition(1000, 200);
-    nanobots.at(3)->setPosition(200, 700);
-    nanobots.at(4)->setPosition(1000, 200);
-    nanobots.at(5)->setPosition(200, 700);
-    nanobots.at(6)->setPosition(1000, 200);
-    nanobots.at(7)->setPosition(200, 700);
-    nanobots.at(8)->setPosition(1000, 200);
-    nanobots.at(9)->setPosition(200, 700);
+    // // position intersections in pixel coordinates
+    // nanobots.at(0)->setPosition(1000, 200);
+    // nanobots.at(1)->setPosition(200, 700);
+    // nanobots.at(2)->setPosition(1000, 200);
+    // nanobots.at(3)->setPosition(200, 700);
+    // nanobots.at(4)->setPosition(1000, 200);
+    // nanobots.at(5)->setPosition(200, 700);
+    // nanobots.at(6)->setPosition(1000, 200);
+    // nanobots.at(7)->setPosition(200, 700);
+    // nanobots.at(8)->setPosition(1000, 200);
+    // nanobots.at(9)->setPosition(200, 700);
 }
 
 int main() {
@@ -117,22 +120,23 @@ int main() {
     worldSize.push_back(image.size().width);
     worldSize.push_back(image.size().height);
     
-    std::vector<int> entityQuantity{nNests, nObstacles, nPiles, nPredators};
+    std::vector<int> staticEntityQuantity{nNests, nObstacles, nPiles};
+    std::vector<int> dynamicEntityQuantity{nPredators, nNanobots};
 
-    generateEntities(nests, obstacles, piles, predators, entityQuantity);
-    generateNanobots(nanobots, nNanobots, worldSize);
+    generateStaticEntities(nests, obstacles, piles, staticEntityQuantity);
+    generateDynamicEntities(predators, nanobots, dynamicEntityQuantity, worldSize);
 
     /* Simulate dynamic objects */
 
     // simulate nanobots
-    std::for_each(nanobots.begin(), nanobots.end(), [](std::shared_ptr<Nanobot> &i) {
-        i->simulate();
+    std::for_each(nanobots.begin(), nanobots.end(), [](std::shared_ptr<Nanobot> &n) {
+        n->simulate();
     });
 
-    // // simulate predators
-    // std::for_each(predators.begin(), predators.end(), [](std::shared_ptr<Predator> &v) {
-    //     v->simulate();
-    // });
+    // simulate predators
+    std::for_each(predators.begin(), predators.end(), [](std::shared_ptr<Predator> &p) {
+        p->simulate();
+    });
 
     /* Launch visualization */
 

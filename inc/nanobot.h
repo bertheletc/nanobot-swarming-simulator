@@ -30,7 +30,6 @@ private:
     
     BotMode _mode;
     float _range;
-
     std::vector<int> _worldSize;
 };
 
