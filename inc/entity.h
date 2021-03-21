@@ -2,12 +2,6 @@
 #define ENTITY_H
 
 #include <vector>
-#include <thread>
-#include <mutex>
-
-
-// forward declaration
-class World;
 
 enum EntityType
 {
@@ -28,15 +22,14 @@ enum Color
     orange,
     purple, 
     black,
-}; //
+}; 
 
-// abstract parent of Obstacle, Nest, and Heap classes
+// abstract parent of Obstacle, Nest, and Pile classes
 class Entity
 {
 public:
     // // METHODS
     Entity(); // Constructor
-    ~Entity(); // Destructor
 
     // getter and setter
     int getID() { return _id; }
@@ -49,18 +42,12 @@ protected:
     int _id;                          // every traffic object has its own unique id
     int _posX, _posY;              // vehicle position in pixels
     // TODO: change this to a smart pointer because it will be accessed by many objects
-    Color color; // rendered color of object
-    float sizeRadius; // represents the size of the object (all objects are circles) 
-    std::vector<std::thread> threads; // holds all threads that have been launched within this object
-
-    // // ???
-    // std::vector<std::thread> threads; // holds all threads that have been launched within this object
-    static std::mutex _mtx;           // mutex shared by all traffic objects for protecting cout 
+    Color _color; // rendered color of object
+    float _sizeRadius; // represents the size of the object (all objects are circles) 
 
 private:
     // ???
     static int _idCnt; // global variable for counting object ids
-    
 };
 
 #endif

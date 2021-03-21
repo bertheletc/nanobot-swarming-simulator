@@ -17,7 +17,6 @@
 #include "predator.h"
 #include "graphics.h"
 
-// GUI placeholder
 int iterations;
 
 bool checkComplete(){};
@@ -76,18 +75,6 @@ void generateDynamicEntities(std::vector<std::shared_ptr<Predator>> &predators,
         nanobots.push_back(std::make_shared<Nanobot>(nnan, worldSize));
         nanobots.at(nnan)->setPosition(100, 100);
     }
-
-    // // position intersections in pixel coordinates
-    // nanobots.at(0)->setPosition(1000, 200);
-    // nanobots.at(1)->setPosition(200, 700);
-    // nanobots.at(2)->setPosition(1000, 200);
-    // nanobots.at(3)->setPosition(200, 700);
-    // nanobots.at(4)->setPosition(1000, 200);
-    // nanobots.at(5)->setPosition(200, 700);
-    // nanobots.at(6)->setPosition(1000, 200);
-    // nanobots.at(7)->setPosition(200, 700);
-    // nanobots.at(8)->setPosition(1000, 200);
-    // nanobots.at(9)->setPosition(200, 700);
 }
 
 int main() {
@@ -95,9 +82,9 @@ int main() {
     /* Setup simulation world */
 
     // create string to hold file path to world image
-    //std::string worldImg = "../terrains/empty-parking-lot-top-down-aerial-view.jpg"; // 1300 width, 697 height
-    //std::string worldImg = "../terrains/nature.jpg"; // 485 width, 512 height
-    std::string worldImg = "../terrains/soccer-field.jpg"; // 1300 width, 910 height
+    //std::string worldImg = "../images/empty-parking-lot-top-down-aerial-view.jpg"; // 1300 width, 697 height
+    //std::string worldImg = "../images/nature.jpg"; // 485 width, 512 height
+    std::string worldImg = "../images/soccer-field.jpg"; // 1300 width, 910 height
 
     // create static entities to place in the world
     std::vector<std::shared_ptr<Nest>> nests;

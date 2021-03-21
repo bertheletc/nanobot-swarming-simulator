@@ -6,7 +6,7 @@
 
 // child of Dynamic class
 // objects of this class represent the moving predators that can kill nanobots
-class Predator: public Entity, public std::enable_shared_from_this<Predator>
+class Predator: public Entity, public Dynamic, public std::enable_shared_from_this<Predator>
 {
 public:
     // Constructor
@@ -19,12 +19,8 @@ public:
     // miscellaneous
     std::shared_ptr<Predator> get_shared_this() { return shared_from_this(); }
 
-private:
-    void randMoveChoice(int &x, int &y);
-    std::vector<float> moveMatrix;
-    
+private:    
     float _huntSkill; // determines how likely a bot is to die when running into predator
-    std::vector<int> _worldSize;
 };
 
 #endif
