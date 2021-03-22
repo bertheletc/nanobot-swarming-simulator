@@ -32,7 +32,7 @@ void Predator::move()
         int x, y;
         while(true)
         {
-            randMoveChoice(x,y,_posX,_posY);
+            randMoveChoice(x,y,_posX,_posY,_uniformMoveMatrix);
             if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
             {
                 this->setPosition(x,y);

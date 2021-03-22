@@ -65,7 +65,7 @@ void Graphics::drawTrafficObjects()
         {
             cv::RNG rng(it->getID());
             cv::Scalar color = cv::Scalar(0,255,255); // YELLOW (b,g,r)
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 50, color, -1);
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 80, color, -1);
         }
         else if (it->getType() == EntityType::kNanobot)
         {
@@ -77,7 +77,7 @@ void Graphics::drawTrafficObjects()
         {
             cv::RNG rng(it->getID());
             cv::Scalar color = cv::Scalar(0,0,255); // RED (b,g,r)
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 10, color, -1);
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 20, color, -1);
         }
     }
 

@@ -6,33 +6,20 @@
 #include <random>
 #include "dynamic.h"
 
-std::mutex Dynamic::_mtx;
-
 Dynamic::Dynamic()
 {
-    for (int i = 0; i < 9; i++)
-    {
-        _moveMatrix.push_back(1.0/9.0);
-    }
+    
 }
 
-Dynamic::~Dynamic()
-{
-    // set up thread barrier before this object is destroyed
-    std::for_each(_threads.begin(), _threads.end(), [](std::thread &t) {
-        t.join();
-    });
-}
-
-void Dynamic::randMoveChoice(int &x, int &y, int posX, int posY)
+void Dynamic::randMoveChoice(int &x, int &y, int posX, int posY, std::vector<float> moveMatrix)
 {
     int step = 2; // pixels
     
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::discrete_distribution<> d({_moveMatrix[0], _moveMatrix[1], _moveMatrix[2], 
-                                    _moveMatrix[3], _moveMatrix[4], _moveMatrix[5], 
-                                    _moveMatrix[6], _moveMatrix[7], _moveMatrix[8]});
+    std::discrete_distribution<> d({moveMatrix[0], moveMatrix[1], moveMatrix[2], 
+                                    moveMatrix[3], moveMatrix[4], moveMatrix[5], 
+                                    moveMatrix[6], moveMatrix[7], moveMatrix[8]});
     switch(d(gen))
     {
         case 0:

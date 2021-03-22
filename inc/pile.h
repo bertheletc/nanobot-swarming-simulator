@@ -6,15 +6,20 @@
 
 // child of Static class
 // objects of this class represent the pile of items for nanobots to retrieve
-class Pile : public Entity
+class Pile : public Entity, public Static, public std::enable_shared_from_this<Pile>
 {
 public:
     // METHODS
-    Pile(); // Constructor
+    Pile(int id, float bias); // Constructor
     // TODO: find correct format for this function declaration
     //double bias() override; // overriden function to calculate the bias
     void removePiece(); // function to remove a single piece from pile
     void removePile(); // function to remove rendered pile from the world
+    void simulate();
+    void exist();
+
+    // miscellaneous
+    std::shared_ptr<Pile> get_shared_this() { return shared_from_this(); }
 
     // ATTRIBUTES
 
