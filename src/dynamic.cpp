@@ -13,7 +13,7 @@ Dynamic::Dynamic()
 
 void Dynamic::randMoveChoice(int &x, int &y, int posX, int posY, std::vector<float> moveMatrix)
 {
-    int step = 2; // pixels
+    int step = 3; // pixels
     
     std::random_device rd;
     std::mt19937 gen(rd());

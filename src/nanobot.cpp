@@ -44,28 +44,25 @@ void Nanobot::move()
         // std::unique_lock<std::mutex> lck(_mtx);
         // std::cout << "Nanobot #" << _id << "::drive: thread id = " << std::this_thread::get_id() << std::endl;
         // lck.unlock();
-        
-        std::vector<float> biasedMoveMatrix = calcBiasMoveMatrix();
 
-        int x, y;
-        while(true)
-        {
-            randMoveChoice(x,y,_posX,_posY,biasedMoveMatrix);
-
-            //check if interfereing with other objects
-            if (checkDetection())
-            {
-                break;
-            }
-
-            if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
-            {
-                this->setPosition(x,y);
-                break;
-            }
-        }
         // sleep at every iteration to reduce CPU usage
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
+       
+        int x, y;
+        std::vector<float> biasedMoveMatrix = this->calcBiasMoveMatrix();
+
+        this->randMoveChoice(x,y,_posX,_posY,biasedMoveMatrix);
+
+        // check if interfereing with other objects
+        if (this->checkDetection(x,y))
+        {
+            this->setPosition(x,y);
+        } 
+        // if no interference, check if the move is in bounds
+        else if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
+        {
+            this->setPosition(x,y);
+        }
     }
 }
 
@@ -74,7 +71,7 @@ int Nanobot::calcEuclideanDist(int x, int y)
     return sqrt(pow((x-_posX),2) + pow((y-_posY),2));
 }
 
-int Nanobot::calcObstacleBiasDirection(int x, int y)
+int Nanobot::calcRepelBiasDirection(int x, int y)
 {
     //[0,1,2
     // 3,4,5
@@ -105,7 +102,7 @@ int Nanobot::calcObstacleBiasDirection(int x, int y)
     }
 }
 
-int Nanobot::calcPileBiasDirection(int x, int y)
+int Nanobot::calcAttractBiasDirection(int x, int y)
 {
     //[0,1,2
     // 3,4,5
@@ -159,9 +156,9 @@ std::vector<float> Nanobot::calcBiasMoveMatrix()
         {
             int ox, oy;
             it->getPosition(ox,oy);
-            if (calcEuclideanDist(ox,oy) < _range)
+            if (this->calcEuclideanDist(ox,oy) < _range)
             {
-                biasedMoveMatrix[calcObstacleBiasDirection(ox,oy)] += it->getBias();
+                biasedMoveMatrix[this->calcRepelBiasDirection(ox,oy)] += it->getBias();
             }
         }
     }
@@ -172,9 +169,9 @@ std::vector<float> Nanobot::calcBiasMoveMatrix()
         {
             int px, py;
             it->getPosition(px,py);
-            if (calcEuclideanDist(px,py) < _range)
+            if (this->calcEuclideanDist(px,py) < _range)
             {
-                biasedMoveMatrix[calcPileBiasDirection(px,py)] += it->getBias(); 
+                biasedMoveMatrix[this->calcAttractBiasDirection(px,py)] += it->getBias();
             }
         }
     }
@@ -184,7 +181,7 @@ std::vector<float> Nanobot::calcBiasMoveMatrix()
     return biasedMoveMatrix;
 }
 
-bool Nanobot::checkDetection()
+bool Nanobot::checkDetection(int &x, int &y)
 {
     //std::lock_guard<std::mutex> uLock(_mutex);
     //std::unique_lock<std::mutex> lck(_mutex);
@@ -193,8 +190,9 @@ bool Nanobot::checkDetection()
     {
         int ox, oy;
         it->getPosition(ox,oy);
-        if (calcEuclideanDist(ox,oy) < _range)
+        if (this->calcEuclideanDist(ox,oy) < (_sizeRadius + it->getSizeRadius()))
         {
+            this->moveAwayFrom(x, y, ox, oy);
             return true;
         }
     }
@@ -203,11 +201,52 @@ bool Nanobot::checkDetection()
     {
         int px, py;
         it->getPosition(px,py);
-        if (calcEuclideanDist(px,py) < _range)
+        if (this->calcEuclideanDist(px,py) < (_sizeRadius + it->getSizeRadius()))
         {
+            this->moveAwayFrom(x, y, px, py);
             return true;
         }
     }
 
     return false;
+}
+
+void Nanobot::moveAwayFrom(int &x, int &y, int &xAway, int &yAway)
+{
+    //[0,1,2
+    // 3,4,5
+    // 6,7,8]
+
+    int xdiff, ydiff;
+    xdiff = _posX - xAway;
+    ydiff = _posY - yAway;
+
+    if (xdiff>0 && ydiff>0) {
+        x = _posX + 1;
+        y = _posY + 1;
+    } else if (xdiff<0 && ydiff>0) {
+        x = _posX - 1;
+        y = _posY + 1;
+    } else if (xdiff>0 && ydiff<0) {
+        x = _posX + 1;
+        y = _posY - 1;
+    } else if (xdiff<0 && ydiff<0) {
+        x = _posX - 1;
+        y = _posY - 1;
+    } else if (xdiff==0 && ydiff>0) {
+        x = _posX;
+        y = _posY + 1;
+    } else if (xdiff>0 && ydiff==0) {
+        x = _posX + 1;
+        y = _posY;
+    } else if (xdiff<0 && ydiff==0) {
+        x = _posX - 1;
+        y = _posY;
+    } else if (xdiff==0 && ydiff<0) {
+        x = _posX;
+        y = _posY - 1;
+    } else {
+        x = _posX;
+        y = _posY;
+    }
 }

@@ -26,9 +26,9 @@ void Predator::move()
     while (true)
     {
         // print id of the current thread
-        std::unique_lock<std::mutex> lck(_mtx);
-        std::cout << "Nanobot #" << _id << "::drive: thread id = " << std::this_thread::get_id() << std::endl;
-        lck.unlock();
+        // std::unique_lock<std::mutex> lck(_mtx);
+        // std::cout << "Predator #" << _id << "::drive: thread id = " << std::this_thread::get_id() << std::endl;
+        // lck.unlock();
 
         int x, y;
         while(true)

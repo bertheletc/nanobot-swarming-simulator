@@ -3,7 +3,7 @@
 Pile::Pile(int id, int size, float bias, int pieces)
 {
     _type = EntityType::kPile;
-    _visualState = VisualState::kUnseen;
+    _visualState = VisualState::kSeen;
     _stock = PileStock::kFilled;
     _color = cv::Scalar(0,255,255); // YELLOW (b,g,r)
     _id = id;

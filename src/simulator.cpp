@@ -44,11 +44,9 @@ void generateStaticEntities(std::vector<std::shared_ptr<Nest>> &nests,
     }
 
     // position intersections in pixel coordinates
-    obstacles.at(0)->setPosition(200, 300);
-    obstacles.at(1)->setPosition(300, 200);
-    obstacles.at(2)->setPosition(400, 500);
-    obstacles.at(3)->setPosition(500, 400);
-    obstacles.at(4)->setPosition(700, 700);
+    obstacles.at(0)->setPosition(400, 500);
+    obstacles.at(1)->setPosition(500, 400);
+    obstacles.at(2)->setPosition(700, 700);
     
     for (int np = 0; np < staticEntityQuantity[2]; np++)
     {
@@ -56,7 +54,7 @@ void generateStaticEntities(std::vector<std::shared_ptr<Nest>> &nests,
     }
 
     // position intersections in pixel coordinates
-    piles.at(0)->setPosition(1200, 800);
+    piles.at(0)->setPosition(1200, 450);
 }
 
 void generateDynamicEntities(std::vector<std::shared_ptr<Nest>> &nests,
@@ -91,11 +89,11 @@ int main() {
 
     // PARAMETERS TO CHANGE
     int nNanobots = 100;
-    int nanobotRange = 50;
+    int nanobotRange = 200;
     int pilePieces = 100;
     float nestBias = 10.0;
     float obstacleBias = 1.0;
-    float pileBias = 5.0;
+    float pileBias = 10.0;
     // END OF PARAMETERS TO CHANGE
 
 
@@ -114,7 +112,7 @@ int main() {
 
     // WORLD POSITION AND SIZING
     int nNests = 1;
-    int nObstacles = 5;
+    int nObstacles = 3;
     int nPiles = 1;
     int nPredators = 2;
 

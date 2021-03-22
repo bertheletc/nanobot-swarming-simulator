@@ -38,11 +38,12 @@ public:
 
 private:
     int calcEuclideanDist(int x, int y);
-    int calcObstacleBiasDirection(int x, int y);
-    int calcPileBiasDirection(int x, int y);
+    int calcRepelBiasDirection(int x, int y);
+    int calcAttractBiasDirection(int x, int y);
     void normalizeMoveMatrix(std::vector<float> &biasedMoveMatrix);
     std::vector<float> calcBiasMoveMatrix();
-    bool checkDetection();
+    bool checkDetection(int &x, int &y);
+    void moveAwayFrom(int &x, int &y, int &xAway, int &yAway);
     
     BotMode _mode;
     float _range;
