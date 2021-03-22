@@ -26,12 +26,13 @@ void generateStaticEntities(std::vector<std::shared_ptr<Nest>> &nests,
           std::vector<std::shared_ptr<Pile>> &piles,
           std::vector<int> staticEntityQuantity,
           std::vector<float> staticEntityBiases, 
+          std::vector<int> staticEntitySizes,
           int pilePieces)
 {
 
     for (int nn = 0; nn < staticEntityQuantity[0]; nn++)
     {
-        nests.push_back(std::make_shared<Nest>(nn, staticEntityBiases[0]));
+        nests.push_back(std::make_shared<Nest>(nn, staticEntitySizes[0], staticEntityBiases[0]));
     }
 
     // position intersections in pixel coordinates
@@ -39,7 +40,7 @@ void generateStaticEntities(std::vector<std::shared_ptr<Nest>> &nests,
 
     for (int no = 0; no < staticEntityQuantity[1]; no++)
     {
-        obstacles.push_back(std::make_shared<Obstacle>(no, staticEntityBiases[1]));
+        obstacles.push_back(std::make_shared<Obstacle>(no, staticEntitySizes[1], staticEntityBiases[1]));
     }
 
     // position intersections in pixel coordinates
@@ -51,7 +52,7 @@ void generateStaticEntities(std::vector<std::shared_ptr<Nest>> &nests,
     
     for (int np = 0; np < staticEntityQuantity[2]; np++)
     {
-        piles.push_back(std::make_shared<Pile>(np, staticEntityBiases[2], pilePieces));
+        piles.push_back(std::make_shared<Pile>(np, staticEntitySizes[2], staticEntityBiases[2], pilePieces));
     }
 
     // position intersections in pixel coordinates
@@ -63,13 +64,14 @@ void generateDynamicEntities(std::vector<std::shared_ptr<Nest>> &nests,
                              std::vector<std::shared_ptr<Pile>> &piles,
                              std::vector<std::shared_ptr<Predator>> &predators,
                              std::vector<std::shared_ptr<Nanobot>> &nanobots,
-                             std::vector<int> &dynamicEntityQuantity,
+                             std::vector<int> dynamicEntityQuantity,
+                             std::vector<int> dynamicEntitySizes,
                              std::vector<int> worldSize,
                              int nanobotRange)
 {
     for (int npre = 0; npre < dynamicEntityQuantity[0]; npre++)
     {
-        predators.push_back(std::make_shared<Predator>(npre, worldSize));
+        predators.push_back(std::make_shared<Predator>(npre, dynamicEntitySizes[0], worldSize));
     }
 
     // position intersections in pixel coordinates
@@ -78,7 +80,7 @@ void generateDynamicEntities(std::vector<std::shared_ptr<Nest>> &nests,
     
     for (int nnan = 0; nnan < dynamicEntityQuantity[1]; nnan++)
     {
-        nanobots.push_back(std::make_shared<Nanobot>(nests, obstacles, piles, predators, nnan, worldSize, nanobotRange));
+        nanobots.push_back(std::make_shared<Nanobot>(nests, obstacles, piles, predators, nnan, dynamicEntitySizes[1], worldSize, nanobotRange));
         nanobots.at(nnan)->setPosition(100, 100);
     }
 }
@@ -88,7 +90,7 @@ int main() {
     /* Setup simulation world */
 
     // PARAMETERS TO CHANGE
-    int nNanobots = 10;
+    int nNanobots = 100;
     int nanobotRange = 50;
     int pilePieces = 100;
     float nestBias = 10.0;
@@ -110,11 +112,17 @@ int main() {
     std::vector<std::shared_ptr<Predator>> predators;
     std::vector<std::shared_ptr<Nanobot>> nanobots;
 
-    // TODO: Change to take in user specified numbers
+    // WORLD POSITION AND SIZING
     int nNests = 1;
     int nObstacles = 5;
     int nPiles = 1;
     int nPredators = 2;
+
+    int nestSize = 100;
+    int obstacleSize = 50;
+    int pileSize = 80;
+    int predatorSize = 20;
+    int nanobotSize = 10;
 
     // load image to extract pixel height and width
     cv::Mat image = cv::imread(worldImg);
@@ -124,10 +132,12 @@ int main() {
     
     std::vector<int> staticEntityQuantity{nNests, nObstacles, nPiles};
     std::vector<float> staticEntityBiases{nestBias, obstacleBias, pileBias};
+    std::vector<int> staticEntitySizes{nestSize, obstacleSize, pileSize};
     std::vector<int> dynamicEntityQuantity{nPredators, nNanobots};
+    std::vector<int> dynamicEntitySizes{predatorSize, nanobotSize};
 
-    generateStaticEntities(nests, obstacles, piles, staticEntityQuantity, staticEntityBiases, pilePieces);
-    generateDynamicEntities(nests, obstacles, piles, predators, nanobots, dynamicEntityQuantity, worldSize, nanobotRange);
+    generateStaticEntities(nests, obstacles, piles, staticEntityQuantity, staticEntityBiases, staticEntitySizes, pilePieces);
+    generateDynamicEntities(nests, obstacles, piles, predators, nanobots, dynamicEntityQuantity, dynamicEntitySizes, worldSize, nanobotRange);
 
     /* Simulate static objects */
 

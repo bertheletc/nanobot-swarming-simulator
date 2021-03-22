@@ -10,7 +10,7 @@ class Nest : public Entity, public Static, public std::enable_shared_from_this<N
 {
 public:
     // METHODS
-    Nest(int id, float bias); // Constructor
+    Nest(int id, int size, float bias); // Constructor
     // TODO: find correct format for this function declaration
     //double bias() override; // overriden function to calculate the bias
     void pieceRetrieved(); // Method to add to the collected tally and switch a bot to searching

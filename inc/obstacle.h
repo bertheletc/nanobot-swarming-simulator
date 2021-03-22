@@ -11,7 +11,7 @@ class Obstacle : public Entity, public Static, public std::enable_shared_from_th
 public:
     // METHODS
     // Constructor
-    Obstacle(int id, float bias);
+    Obstacle(int id, int size, float bias);
     // TODO: find correct format for this function declaration
     //double bias() override; // overriden function to calculate the bias
     void simulate();

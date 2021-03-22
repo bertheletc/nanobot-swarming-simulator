@@ -1,10 +1,13 @@
 #include "pile.h"
 
-Pile::Pile(int id, float bias, int pieces)
+Pile::Pile(int id, int size, float bias, int pieces)
 {
     _type = EntityType::kPile;
     _visualState = VisualState::kUnseen;
+    _stock = PileStock::kFilled;
+    _color = cv::Scalar(0,255,255); // YELLOW (b,g,r)
     _id = id;
+    _sizeRadius = size;
     _bias = bias;
     _pieces = pieces;
     _timeOn = 0;

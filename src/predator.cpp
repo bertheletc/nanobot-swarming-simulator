@@ -3,11 +3,12 @@
 #include <mutex>
 #include "predator.h"
 
-Predator::Predator(int id, std::vector<int> worldSize)
+Predator::Predator(int id, int size, std::vector<int> worldSize)
 {
     _type = EntityType::kPredator;
     _id = id;
-
+    _sizeRadius = size;
+    _color = cv::Scalar(0,0,255); // RED (b,g,r)
     _worldSize = worldSize;
 }
 

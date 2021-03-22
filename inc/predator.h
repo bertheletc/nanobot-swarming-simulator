@@ -10,7 +10,7 @@ class Predator: public Entity, public Dynamic, public std::enable_shared_from_th
 {
 public:
     // Constructor
-    Predator(int id, std::vector<int> worldSize);
+    Predator(int id, int size, std::vector<int> worldSize);
     double bias();
     void simulate();
     void move();

@@ -11,17 +11,18 @@ Nanobot::Nanobot(std::vector<std::shared_ptr<Nest>> &nests,
             std::vector<std::shared_ptr<Obstacle>> &obstacles,
             std::vector<std::shared_ptr<Pile>> &piles,
             std::vector<std::shared_ptr<Predator>> &predators,
-            int id, std::vector<int> worldSize, int range)
+            int id, int size, std::vector<int> worldSize, int range)
 {
-    _type = EntityType::kNanobot;
-    _mode = BotMode::kNesting;
-   
     _nests = nests;
     _obstacles = obstacles;
     _piles = piles;
     _predators = predators;
-   
+    
+    _type = EntityType::kNanobot;
+    _mode = BotMode::kNesting;
+    _color = cv::Scalar(255,0,0); // BLUE (b,g,r)
     _id = id;
+    _sizeRadius = size;
     _worldSize = worldSize;
     _range = range;
 }
@@ -39,7 +40,7 @@ void Nanobot::move()
 
     while (true)
     {
-        // print id of the current thread
+        // //print id of the current thread
         // std::unique_lock<std::mutex> lck(_mtx);
         // std::cout << "Nanobot #" << _id << "::drive: thread id = " << std::this_thread::get_id() << std::endl;
         // lck.unlock();
@@ -50,6 +51,13 @@ void Nanobot::move()
         while(true)
         {
             randMoveChoice(x,y,_posX,_posY,biasedMoveMatrix);
+
+            //check if interfereing with other objects
+            if (checkDetection())
+            {
+                break;
+            }
+
             if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
             {
                 this->setPosition(x,y);
@@ -174,4 +182,32 @@ std::vector<float> Nanobot::calcBiasMoveMatrix()
     normalizeMoveMatrix(biasedMoveMatrix);
 
     return biasedMoveMatrix;
+}
+
+bool Nanobot::checkDetection()
+{
+    //std::lock_guard<std::mutex> uLock(_mutex);
+    //std::unique_lock<std::mutex> lck(_mutex);
+
+    for (auto it : _obstacles)
+    {
+        int ox, oy;
+        it->getPosition(ox,oy);
+        if (calcEuclideanDist(ox,oy) < _range)
+        {
+            return true;
+        }
+    }
+
+    for (auto it : _piles)
+    {
+        int px, py;
+        it->getPosition(px,py);
+        if (calcEuclideanDist(px,py) < _range)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }

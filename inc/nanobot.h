@@ -26,11 +26,12 @@ public:
             std::vector<std::shared_ptr<Obstacle>> &obstacles,
             std::vector<std::shared_ptr<Pile>> &piles,
             std::vector<std::shared_ptr<Predator>> &predators,
-            int id, std::vector<int> worldSize, int range);
+            int id, int size, std::vector<int> worldSize, int range);
     
     void simulate();
     void move();
     void killed();
+    BotMode getBotMode() { return _mode; }
 
     // miscellaneous
     std::shared_ptr<Nanobot> get_shared_this() { return shared_from_this(); }
@@ -41,6 +42,7 @@ private:
     int calcPileBiasDirection(int x, int y);
     void normalizeMoveMatrix(std::vector<float> &biasedMoveMatrix);
     std::vector<float> calcBiasMoveMatrix();
+    bool checkDetection();
     
     BotMode _mode;
     float _range;
