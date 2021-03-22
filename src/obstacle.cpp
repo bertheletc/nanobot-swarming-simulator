@@ -3,7 +3,8 @@
 Obstacle::Obstacle(int id, float bias)
 {
     _type = EntityType::kObstacle;
-    _visualState = VisualState::kSeen;
+    _visualState = VisualState::kUnseen;
+    _id = id;
     _bias = bias;
     _timeOn = 0;
 }

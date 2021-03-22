@@ -43,12 +43,12 @@ void Nanobot::move()
         // std::unique_lock<std::mutex> lck(_mtx);
         // std::cout << "Nanobot #" << _id << "::drive: thread id = " << std::this_thread::get_id() << std::endl;
         // lck.unlock();
+        
         std::vector<float> biasedMoveMatrix = calcBiasMoveMatrix();
 
         int x, y;
         while(true)
         {
-            //randMoveChoice(x,y,_posX,_posY,_uniformMoveMatrix);
             randMoveChoice(x,y,_posX,_posY,biasedMoveMatrix);
             if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
             {

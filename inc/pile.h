@@ -10,7 +10,7 @@ class Pile : public Entity, public Static, public std::enable_shared_from_this<P
 {
 public:
     // METHODS
-    Pile(int id, float bias); // Constructor
+    Pile(int id, float bias, int pieces); // Constructor
     // TODO: find correct format for this function declaration
     //double bias() override; // overriden function to calculate the bias
     void removePiece(); // function to remove a single piece from pile

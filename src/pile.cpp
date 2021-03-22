@@ -1,10 +1,12 @@
 #include "pile.h"
 
-Pile::Pile(int id, float bias)
+Pile::Pile(int id, float bias, int pieces)
 {
     _type = EntityType::kPile;
-    _visualState = VisualState::kSeen;
+    _visualState = VisualState::kUnseen;
+    _id = id;
     _bias = bias;
+    _pieces = pieces;
     _timeOn = 0;
 }
 
