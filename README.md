@@ -6,7 +6,7 @@ The Capstone Project gives you a chance to integrate what you've learned through
 
 In this project, you can build your own C++ application starting with this repo, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
 
-<img src="terrains/unnamed.jpg"/>
+<img src="images/NANOBOT_SIMULATION_WINDOW.png"/>
 
 ## Dependencies for Running Locally
 * cmake >= 3.11.3
@@ -28,3 +28,58 @@ In this project, you can build your own C++ application starting with this repo,
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./nanobot_simulation`.
+
+## Running Behavior
+
+* While the simulation is running you will see a window like the one shown in the project intro above.
+* The color coding key is as follows
+  * Nanobots: purple, blue, or pink
+    * purple - in the nest
+    * blue - searching for the pile of pieces
+    * pink - returning to nest with piece
+  * Predators: red
+  * Nests: orange
+  * Obstacles: black
+  * Piles: yellow
+* While the simulation is running you will see printouts of what is happening as shown in the image below.
+* You will see the following things printed out to the console.
+    * Message when nanobot returns a piece to the nest telling how many have been collected.
+    * Message stating that a nanobot has been killed by a predator. 
+
+<img src="images/simulation_running_printout.png"/>
+
+* Once the simulation is complete you will see console printouts stating the completion as well as the simulation duration (as shown below)
+
+<img src="images/simulation_end.png"/>
+
+## Rubric Checkoffs
+
+THE FOLLOWING RUBRIC POINTS ARE ADDRESSED IN THIS PROJECT
+
+* The project demonstrates an understanding of C++ functions and control structures.
+  * FILES: Check ALL files
+* The project reads data from a file and process the data, or the program writes data to a file. 
+  * FILES: Check graphics.cpp, line 46 
+* The project uses Object Oriented Programming techniques.
+  * FILES: Check entire project structure and files except simulator.cpp
+* Classes use appropriate access specifiers for class members.
+  * FILES: Check ALL .h files
+* Classes abstract implementation details from their interfaces.
+  * FILES: Check entire project structure and files except simulator.cpp
+* Classes encapsulate behavior.
+  * FILES: Check entire project structure and files except simulator.cpp
+* Classes follow an appropriate inheritance hierarchy.
+  * FILES: Check entire project structure and files except simulator.cpp. Specifically look at Nanobot, Predator, Nest, Obstacle, and Pile subclasses
+* Derived class functions override virtual base class functions.
+  * FILES: Check out Predator and Nanobot classes that overrite virtual methods from Entity and Dynamic classes
+* The project makes use of references in function declarations.
+  * FILES: Check out nanobot.cpp, lines 213, 266, 358
+* The project uses destructors appropriately.
+  * FILES: Check out entity.cpp, line 24
+* The project uses smart pointers instead of raw pointers.
+  * FILES: Shared pointers are used to pass the entity objects around. Check out simulator.cpp, line 106
+* The project uses multithreading.
+  * FILES: Nanobots and Predators run in threads. Check out nanobot.cpp and predator.cpp
+* A mutex or lock is used in the project.
+  * FILES: Check out nanobot.cpp, lines 92, 230, 268, 283, 401, 423
+
