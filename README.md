@@ -14,7 +14,7 @@ The nanobots move based on a 3x3 probability matrix of the common directions (NW
 
 The simulation time changes based on the input parameters. These parameters can be customized (see below).
 
-HAVE FUN! :)
+**HAVE FUN!!!!! :)**
 
 <img src="images/NANOBOT_SIMULATION_WINDOW.png"/>
 
