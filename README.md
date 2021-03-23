@@ -1,12 +1,53 @@
 # CPPND: Nanobot Swarming Simulator
 
-This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).
+This is my submission for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).
 
-The Capstone Project gives you a chance to integrate what you've learned throughout this program. This project will become an important part of your portfolio to share with current and future colleagues and employers.
+This project is a simulator, in which the objective is for nanobots to find the pile, retrieve pieces, and return them to the nest as quickly as possible and without getting killed. This project builds off of alot of code from the Concurrent-Traffic-Simulator (multithreading, graphics, etc.)
 
-In this project, you can build your own C++ application starting with this repo, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
+There are many entities that exist in the nanobot world including the following:
+* **Nest**: the place the nanobot comes and goes from. The nanobot will leave from the nest, find pieces, and bring them back to the nest
+* **Obstacle**: the enthities that the object must avoid and go around to get to the pieces
+* **Pile**: the place where all the pieces are kept. The nanobot must find the pile, take a piece, and bring it back
+* **Predators**: these entities move around randomly and kill nanobots as they are trying to do their job
+
+The nanobots move based on a 3x3 probability matrix of the common directions (NW, N, NE, W, CURRENT POSITION, E, SW, S, SE). These probability matrices can be biased if the nanobot sees another entity. Piles and Nests attract the nanobots, while Obstacles repel them. Predators on the other hand straight up kill the nanobots.
+
+The simulation time changes based on the input parameters. These parameters can be customized (see below).
+
+HAVE FUN! :)
 
 <img src="images/NANOBOT_SIMULATION_WINDOW.png"/>
+
+## File Structure
+
+* ALL **.h** files are located in the **inc** directory
+* ALL **.cpp** are located in the **src** directory
+* Images for the simulator and the README can be found in the **images** directory
+
+## Class Structure
+
+* The **simulator.cpp** file contains the main function for this project and is not itself a class
+* ALL other files are classes
+
+**Class Descriptions:**
+
+* The **Graphics** class is a standalone class, whose purpose is to render the visualization (similar code to concurrent traffic simulator)
+
+* The **Entity** class is an abstract parent class, whose purpose is to give all world entities common traits (positions, colors, etc.)
+
+* The **Static** class is an abstract parent class, whose purpose is to give all static entities a bias and visual state
+
+* The **Dynamic** class is an abstract parent class, whose purpose is to give all dynamic entities the ability to move randomly based on a probability matrix
+
+* The **Nest** class inherits from the **Static** and **Entity** classes, and its purpose is to, be the starting position for and store collected pieces from nanobots
+
+* The **Obstacle** class inherits from the **Static** and **Entity** classes, and its purpose is to serve as an entity that nanobots must avoid and move around
+
+* The **Pile** class inherits from the **Static** and **Entity** classes, and its purpose is to hold the pieces that the nanobot must retrieve
+
+* The **Predator** class inherits from the **Dynamic** and **Entity** classes, and its purpose is to randomly move around and kill nanobots
+
+* The **Nanobot** class inherits from the **Dynamic** and **Entity** classes, and its purpose is to collect pieces from a pile and bring them back to the nest
 
 ## Dependencies for Running Locally
 * cmake >= 3.11.3
@@ -28,6 +69,19 @@ In this project, you can build your own C++ application starting with this repo,
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./nanobot_simulation`.
+
+## Simulation Parameters
+
+* If you would like to play with some simulation parameters PLEASE ONLY CHANGE THE ONES LISTED BELOW
+
+<img src="images/parameters_to_change.png"/>
+
+* nNanobots: changes the number of nanobots (dont go more than 200, each nanobot is a thread)
+* nanobotRange: the range within in pixels that a nanobot can identify a seen entity (obstacle, pile)
+* pilePieces: how many pieces the nanobots must retrieve for the simulation to complete
+* nestBias: amount of bias given to nanobot probability matrix if nest seen (attracting)
+* obstacleBias: amount of bias given to nanobot probability matrix if obstacle seen (repelling)
+* pileBias: amount of bias given to nanobot probability matrix if pile seen (attracting)
 
 ## Running Behavior
 
