@@ -12,6 +12,7 @@ public:
     // METHODS
     Nest(int id, int size, float bias, int pilePieces); // Constructor
     void depositPiece() { _piecesCollected++; }; // Method to add to the collected tally and switch a bot to searching
+    // getters
     int getPiecesCollected() { return _piecesCollected; }
     int getPiecesToCollect() { return _piecesToCollect; }
 
@@ -21,7 +22,7 @@ public:
 private:
     // ATTRIBUTES
     int _piecesCollected; // number of pieces retrieved and brought back to the nest
-    int _piecesToCollect;
+    int _piecesToCollect; // total number of pieces needed to collect
 };
 
 #endif

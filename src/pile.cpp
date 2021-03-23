@@ -1,5 +1,6 @@
 #include "pile.h"
 
+// Constructor
 Pile::Pile(int id, int size, float bias, int pieces)
 {
     _type = EntityType::kPile;
@@ -10,17 +11,19 @@ Pile::Pile(int id, int size, float bias, int pieces)
     _sizeRadius = size;
     _bias = bias;
     _pieces = pieces;
-    _timeOn = 0;
+    // FUTURE IMPROVEMENTS: WASN'T ABLE TO IMPLEMENT IN TIME
+    //_timeOn = 0;
     _flag = false;
 }
 
-void Pile::simulate()
-{
-    // launch move function in a thread
-    _threads.emplace_back(std::thread(&Pile::exist, this));
-}
+// FUTURE IMPROVEMENTS: WASN'T ABLE TO IMPLEMENT IN TIME
+// void Pile::simulate()
+// {
+//     // launch move function in a thread
+//     _threads.emplace_back(std::thread(&Pile::exist, this));
+// }
 
-void Pile::exist()
-{
+// void Pile::exist()
+// {
 
-}
+// }

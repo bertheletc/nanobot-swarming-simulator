@@ -1,5 +1,6 @@
 #include "obstacle.h"
 
+// Constructor
 Obstacle::Obstacle(int id, int size, float bias)
 {
     _type = EntityType::kObstacle;
@@ -7,18 +8,19 @@ Obstacle::Obstacle(int id, int size, float bias)
     _id = id;
     _sizeRadius = size;
     _bias = bias;
-    _timeOn = 0;
+    //_timeOn = 0;
     _color = cv::Scalar(0,0,0); // BLACK (b,g,r)
     _flag = false;
 }
 
-void Obstacle::simulate()
-{
-    // launch move function in a thread
-    _threads.emplace_back(std::thread(&Obstacle::exist, this));
-}
+// FUTURE IMPROVEMENTS: WASN'T ABLE TO IMPLEMENT IN TIME
+// void Obstacle::simulate()
+// {
+//     // launch move function in a thread
+//     _threads.emplace_back(std::thread(&Obstacle::exist, this));
+// }
 
-void Obstacle::exist()
-{
+// void Obstacle::exist()
+// {
 
-}
+// }

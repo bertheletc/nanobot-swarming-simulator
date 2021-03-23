@@ -8,30 +8,32 @@ enum PileStock
 {
     kFilled,
     kEmpty,
-};
+}; // tells nanobots if there are pieces to take
 
-// child of Static class
-// objects of this class represent the pile of items for nanobots to retrieve
+// child of Entity and Static classes
+// objects of this class represent the pile of pieces for nanobots to retrieve
 class Pile : public Entity, public Static, public std::enable_shared_from_this<Pile>
 {
 public:
     // METHODS
     Pile(int id, int size, float bias, int pieces); // Constructor
-    // TODO: find correct format for this function declaration
-    //double bias() override; // overriden function to calculate the bias
-    void simulate();
-    void exist();
+    // FUTURE IMPROVEMENTS: WASN'T ABLE TO IMPLEMENT IN TIME
+    // // overriden methods from abstract Dynamic and Entity classes
+    // void simulate();
+    // void exist();
+    // getters and setters
     PileStock getPileStock() { return _stock; }
-    void removePiece() { _pieces--; }; // Method to add to the collected tally and switch a bot to searching
+    void setPileStockEmpty() { _stock = PileStock::kEmpty; }
+    int getPiecesLeft() { return _pieces; }
+    // method to add to the collected tally and switch a bot to searching
+    void removePiece() { _pieces--; };
 
     // miscellaneous
     std::shared_ptr<Pile> get_shared_this() { return shared_from_this(); }
 
-    // ATTRIBUTES
-
 private:
     // ATTRIBUTES
-    PileStock _stock;
+    PileStock _stock; // tells if pile has pieces or is empty
     int _pieces; // represents the amount of pieces left in the pile for collection (1 piece per nanobot)
 };
 

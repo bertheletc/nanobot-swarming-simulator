@@ -5,9 +5,13 @@
 #include <opencv2/highgui.hpp>
 #include "graphics.h"
 
+// USED VERY SIMILAR CODE TO CONCURRENT TRAFFIC SIMULATOR FOR THIS
+
+// method to simulate the graphics engine
 void Graphics::simulate()
 {
     this->loadBackgroundImg();
+    // begin loop to render the simulation
     while (true)
     {
         // sleep at every iteration to reduce CPU usage
@@ -18,6 +22,7 @@ void Graphics::simulate()
 
         for (auto it : _entities)
         {
+            // check Nest entity flag to know if simulation is complete
             if (it->getType() == EntityType::kNest)
             {
                 if (it->getFlag())
@@ -30,6 +35,7 @@ void Graphics::simulate()
     }
 }
 
+// method to load image into rendering of simulation
 void Graphics::loadBackgroundImg()
 {    
     // create window

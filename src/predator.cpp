@@ -3,6 +3,7 @@
 #include <mutex>
 #include "predator.h"
 
+// Constructor
 Predator::Predator(int id, int size, std::vector<int> worldSize)
 {
     _type = EntityType::kPredator;
@@ -14,6 +15,8 @@ Predator::Predator(int id, int size, std::vector<int> worldSize)
     _step = 1;
 }
 
+// overriden methods from abstract Dynamic and Entity classes
+
 void Predator::simulate()
 {
     // launch move function in a thread
@@ -22,16 +25,15 @@ void Predator::simulate()
 
 void Predator::move()
 {
-    // initalize variables
-    double cycleDuration = 1000; // duration of a single simulation cycle in ms
-
+    // repeating loop to move predator entities until simulation is complete
     while (true)
     {   
         // sleep at every iteration to reduce CPU usage
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
+        // choose random movement based on uniform probability matrix and update predator position
         int x, y;
-        randMoveChoice(x,y,_posX,_posY,_uniformMoveMatrix);
+        this->randMoveChoice(x,y,_posX,_posY,_uniformMoveMatrix);
         if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
         {
             this->setPosition(x,y);
