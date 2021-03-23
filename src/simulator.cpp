@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <thread>
+#include <chrono>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
@@ -32,11 +33,11 @@ void generateStaticEntities(std::vector<std::shared_ptr<Nest>> &nests,
 
     for (int nn = 0; nn < staticEntityQuantity[0]; nn++)
     {
-        nests.push_back(std::make_shared<Nest>(nn, staticEntitySizes[0], staticEntityBiases[0]));
+        nests.push_back(std::make_shared<Nest>(nn, staticEntitySizes[0], staticEntityBiases[0], pilePieces));
     }
 
     // position intersections in pixel coordinates
-    nests.at(0)->setPosition(100, 100);
+    nests.at(0)->setPosition(50, 50);
 
     for (int no = 0; no < staticEntityQuantity[1]; no++)
     {
@@ -46,7 +47,7 @@ void generateStaticEntities(std::vector<std::shared_ptr<Nest>> &nests,
     // position intersections in pixel coordinates
     obstacles.at(0)->setPosition(400, 500);
     obstacles.at(1)->setPosition(500, 400);
-    obstacles.at(2)->setPosition(700, 700);
+    obstacles.at(2)->setPosition(500, 500);
     
     for (int np = 0; np < staticEntityQuantity[2]; np++)
     {
@@ -90,7 +91,7 @@ int main() {
     // PARAMETERS TO CHANGE
     int nNanobots = 100;
     int nanobotRange = 200;
-    int pilePieces = 100;
+    int pilePieces = 50;
     float nestBias = 10.0;
     float obstacleBias = 1.0;
     float pileBias = 10.0;
@@ -138,6 +139,8 @@ int main() {
     generateDynamicEntities(nests, obstacles, piles, predators, nanobots, dynamicEntityQuantity, dynamicEntitySizes, worldSize, nanobotRange);
 
     /* Simulate static objects */
+
+    auto start = std::chrono::high_resolution_clock::now();
 
     // simulate obstacles
     std::for_each(obstacles.begin(), obstacles.end(), [](std::shared_ptr<Obstacle> &o) {
@@ -196,4 +199,11 @@ int main() {
     graphics->setWorldFilename(worldImg);
     graphics->setEntities(entities);
     graphics->simulate();
+
+    auto stop = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start); 
+
+    std::cout << "SIMULATION OVER!" << std::endl;
+    std::cout << "Duration of the Simulation: " << duration.count() << " seconds" << std::endl;
 }

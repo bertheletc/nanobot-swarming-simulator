@@ -17,6 +17,7 @@ protected:
     void randMoveChoice(int &x, int &y, int posX, int posY, std::vector<float> moveMatrix);
 
     std::vector<int> _worldSize;
+    int _step;
 
     std::vector<float> _uniformMoveMatrix{(1.0/9.0),(1.0/9.0),(1.0/9.0),
                                           (1.0/9.0),(1.0/9.0),(1.0/9.0),

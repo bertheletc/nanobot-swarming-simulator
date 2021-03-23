@@ -12,9 +12,21 @@ void Graphics::simulate()
     {
         // sleep at every iteration to reduce CPU usage
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
+        
         // update graphics
         this->drawTrafficObjects();
+
+        for (auto it : _entities)
+        {
+            if (it->getType() == EntityType::kNest)
+            {
+                if (it->getFlag())
+                {
+                    // RETURN AND END SIMULATION
+                    return;
+                }
+            }
+        }
     }
 }
 

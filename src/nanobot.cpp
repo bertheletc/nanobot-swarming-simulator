@@ -20,11 +20,13 @@ Nanobot::Nanobot(std::vector<std::shared_ptr<Nest>> &nests,
     
     _type = EntityType::kNanobot;
     _mode = BotMode::kNesting;
-    _color = cv::Scalar(255,0,0); // BLUE (b,g,r)
+    _color = cv::Scalar(255,0,157); // PURPLE (b,g,r)
     _id = id;
     _sizeRadius = size;
     _worldSize = worldSize;
     _range = range;
+    _flag = false;
+    _step = 3;
 }
 
 void Nanobot::simulate()
@@ -40,28 +42,88 @@ void Nanobot::move()
 
     while (true)
     {
-        // //print id of the current thread
-        // std::unique_lock<std::mutex> lck(_mtx);
-        // std::cout << "Nanobot #" << _id << "::drive: thread id = " << std::this_thread::get_id() << std::endl;
-        // lck.unlock();
-
         // sleep at every iteration to reduce CPU usage
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
        
-        int x, y;
-        std::vector<float> biasedMoveMatrix = this->calcBiasMoveMatrix();
-
-        this->randMoveChoice(x,y,_posX,_posY,biasedMoveMatrix);
-
-        // check if interfereing with other objects
-        if (this->checkDetection(x,y))
+        if (_mode == BotMode::kNesting)
         {
-            this->setPosition(x,y);
+            int x, y;
+            randMoveChoice(x,y,_posX,_posY,_uniformMoveMatrix);
+            if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
+            {
+                this->setPosition(x,y);
+            }
+
+            if (checkIfOutOfNest())
+            {
+                _mode = BotMode::kSearching;
+                _color = cv::Scalar(255,0,0); // BLUE (b,g,r)
+            }
         } 
-        // if no interference, check if the move is in bounds
-        else if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
+        else if (_mode == BotMode::kSearching)
         {
-            this->setPosition(x,y);
+            int x, y;
+            std::vector<float> searchingMoveMatrix = this->calcSearchingMoveMatrix();
+            EntityType detectedEntity = EntityType::kNone;
+
+            this->randMoveChoice(x,y,_posX,_posY,searchingMoveMatrix);
+
+            // check if interfereing with other objects
+            if (this->checkDetection(x,y,detectedEntity))
+            {
+                this->setPosition(x,y);
+                if (detectedEntity == EntityType::kPile)
+                {
+                    _mode = BotMode::kReturning;
+                    _color = cv::Scalar(255,0,255); // PINK (b,g,r)
+                    _step = 1;
+                }
+
+                if (detectedEntity == EntityType::kPredator)
+                {
+                    //print id of the current thread
+                    std::unique_lock<std::mutex> lck(_mtx);
+                    std::cout << "NANOBOT KILLED!" << std::endl;
+                    lck.unlock();
+                    _mode = BotMode::kDead;
+                    _color = cv::Scalar(160,160,160); // GREY (b,g,r)
+                }
+            } 
+            // if no interference, check if the move is in bounds
+            else if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
+            {
+                this->setPosition(x,y);
+            }
+        } 
+        else if (_mode == BotMode::kReturning)
+        {
+            int x, y;
+            std::vector<float> returningMoveMatrix = this->calcReturningMoveMatrix();
+            EntityType detectedEntity = EntityType::kNone;
+
+            this->randMoveChoice(x,y,_posX,_posY,returningMoveMatrix);
+
+            // check if interfereing with other objects
+            if (this->checkDetection(x,y,detectedEntity))
+            {
+                this->setPosition(x,y);
+                if (detectedEntity == EntityType::kNest)
+                {
+                    _mode = BotMode::kSearching;
+                    _color = cv::Scalar(255,0,0); // BLUE (b,g,r)
+                    _step = 3;
+                }
+            } 
+            // if no interference, check if the move is in bounds
+            else if (x > 0  && x <= _worldSize[0] && y > 0 && y <= _worldSize[1])
+            {
+                this->setPosition(x,y);
+            }
+        } 
+        else
+        {
+            // NANOBOT BOT IS DEAD
+            this->setPosition(0,0);
         }
     }
 }
@@ -143,12 +205,11 @@ void Nanobot::normalizeMoveMatrix(std::vector<float> &biasedMoveMatrix)
     }
 }
 
-std::vector<float> Nanobot::calcBiasMoveMatrix()
+std::vector<float> Nanobot::calcSearchingMoveMatrix()
 {
-    std::vector<float> biasedMoveMatrix(9, 1.0);
+    std::vector<float> searchingMoveMatrix(9, 1.0);
 
-    //std::lock_guard<std::mutex> uLock(_mutex);
-    //std::unique_lock<std::mutex> lck(_mutex);
+    std::lock_guard<std::mutex> uLock(_mutex);
 
     for (auto it : _obstacles)
     {
@@ -158,7 +219,7 @@ std::vector<float> Nanobot::calcBiasMoveMatrix()
             it->getPosition(ox,oy);
             if (this->calcEuclideanDist(ox,oy) < _range)
             {
-                biasedMoveMatrix[this->calcRepelBiasDirection(ox,oy)] += it->getBias();
+                searchingMoveMatrix[this->calcRepelBiasDirection(ox,oy)] += it->getBias();
             }
         }
     }
@@ -171,27 +232,54 @@ std::vector<float> Nanobot::calcBiasMoveMatrix()
             it->getPosition(px,py);
             if (this->calcEuclideanDist(px,py) < _range)
             {
-                biasedMoveMatrix[this->calcAttractBiasDirection(px,py)] += it->getBias();
+                searchingMoveMatrix[this->calcAttractBiasDirection(px,py)] += it->getBias();
             }
         }
     }
 
-    normalizeMoveMatrix(biasedMoveMatrix);
+    normalizeMoveMatrix(searchingMoveMatrix);
 
-    return biasedMoveMatrix;
+    return searchingMoveMatrix;
 }
 
-bool Nanobot::checkDetection(int &x, int &y)
+bool Nanobot::checkDetection(int &x, int &y, EntityType &detectedEntity)
 {
-    //std::lock_guard<std::mutex> uLock(_mutex);
-    //std::unique_lock<std::mutex> lck(_mutex);
+    std::lock_guard<std::mutex> uLock(_mutex);
 
+    for (auto it : _nests)
+    {
+        int nx, ny;
+        it->getPosition(nx,ny);
+        if (this->calcEuclideanDist(nx,ny) < (_sizeRadius + it->getSizeRadius()))
+        {
+            if (_mode == BotMode::kReturning)
+            {
+                it->depositPiece();
+                //print id of the current thread
+                std::unique_lock<std::mutex> lck(_mtx);
+                std::cout << "The nanobots have collected " << it->getPiecesCollected() << "/" << it->getPiecesToCollect() << " pieces!" << std::endl;
+                lck.unlock();
+                if (it->getPiecesCollected() >= it->getPiecesToCollect())
+                {
+                    // sleep at every iteration to reduce CPU usage
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                    it->turnOnFlag();
+                }
+            }
+            
+            detectedEntity = EntityType::kNest;
+            this->moveAwayFrom(x, y, nx, ny);
+            return true;
+        }
+    }
+    
     for (auto it : _obstacles)
     {
         int ox, oy;
         it->getPosition(ox,oy);
         if (this->calcEuclideanDist(ox,oy) < (_sizeRadius + it->getSizeRadius()))
         {
+            detectedEntity = EntityType::kObstacle;
             this->moveAwayFrom(x, y, ox, oy);
             return true;
         }
@@ -203,7 +291,25 @@ bool Nanobot::checkDetection(int &x, int &y)
         it->getPosition(px,py);
         if (this->calcEuclideanDist(px,py) < (_sizeRadius + it->getSizeRadius()))
         {
+            if (_mode == BotMode::kSearching)
+            {
+                it->removePiece();
+            }
+            
+            detectedEntity = EntityType::kPile;
             this->moveAwayFrom(x, y, px, py);
+            return true;
+        }
+    }
+
+    for (auto it : _predators)
+    {
+        int prex, prey;
+        it->getPosition(prex,prey);
+        if (this->calcEuclideanDist(prex,prey) < (_sizeRadius + it->getSizeRadius()))
+        {
+            detectedEntity = EntityType::kPredator;
+            this->moveAwayFrom(x, y, prex, prey);
             return true;
         }
     }
@@ -249,4 +355,42 @@ void Nanobot::moveAwayFrom(int &x, int &y, int &xAway, int &yAway)
         x = _posX;
         y = _posY;
     }
+}
+
+bool Nanobot::checkIfOutOfNest()
+{
+    std::lock_guard<std::mutex> uLock(_mutex);
+
+    for (auto it : _nests)
+    {
+        int nx, ny;
+        it->getPosition(nx,ny);
+        if (this->calcEuclideanDist(nx,ny) >= (_sizeRadius + it->getSizeRadius()))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+std::vector<float> Nanobot::calcReturningMoveMatrix()
+{
+    std::vector<float> returningMoveMatrix(9, 1.0);
+
+    std::lock_guard<std::mutex> uLock(_mutex);
+
+    for (auto it : _nests)
+    {
+        if (it->getVisualState() == VisualState::kSeen)
+        {
+            int nx, ny;
+            it->getPosition(nx,ny);
+            returningMoveMatrix[this->calcAttractBiasDirection(nx,ny)] += it->getBias();
+        }
+    }
+
+    normalizeMoveMatrix(returningMoveMatrix);
+
+    return returningMoveMatrix;
 }

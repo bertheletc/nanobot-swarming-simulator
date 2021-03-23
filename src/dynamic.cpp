@@ -12,9 +12,7 @@ Dynamic::Dynamic()
 }
 
 void Dynamic::randMoveChoice(int &x, int &y, int posX, int posY, std::vector<float> moveMatrix)
-{
-    int step = 3; // pixels
-    
+{   
     std::random_device rd;
     std::mt19937 gen(rd());
     std::discrete_distribution<> d({moveMatrix[0], moveMatrix[1], moveMatrix[2], 
@@ -23,19 +21,19 @@ void Dynamic::randMoveChoice(int &x, int &y, int posX, int posY, std::vector<flo
     switch(d(gen))
     {
         case 0:
-            x = posX - step;
-            y = posY - step;
+            x = posX - _step;
+            y = posY - _step;
             break;
         case 1:
             x = posX;
-            y = posY - step;
+            y = posY - _step;
             break;
         case 2:
-            x = posX + step;
-            y = posY - step;
+            x = posX + _step;
+            y = posY - _step;
             break;
         case 3:
-            x = posX - step;
+            x = posX - _step;
             y = posY;
             break;
         case 4:
@@ -43,20 +41,20 @@ void Dynamic::randMoveChoice(int &x, int &y, int posX, int posY, std::vector<flo
             y = posY;
             break;
         case 5:
-            x = posX + step;
+            x = posX + _step;
             y = posY;
             break;
         case 6:
-            x = posX - step;
-            y = posY + step;
+            x = posX - _step;
+            y = posY + _step;
             break;
         case 7:
             x = posX;
-            y = posY + step;
+            y = posY + _step;
             break;
         case 8:
-            x = posX + step;
-            y = posY + step;
+            x = posX + _step;
+            y = posY + _step;
             break;
     }
 }

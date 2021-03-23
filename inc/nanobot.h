@@ -41,9 +41,11 @@ private:
     int calcRepelBiasDirection(int x, int y);
     int calcAttractBiasDirection(int x, int y);
     void normalizeMoveMatrix(std::vector<float> &biasedMoveMatrix);
-    std::vector<float> calcBiasMoveMatrix();
-    bool checkDetection(int &x, int &y);
+    std::vector<float> calcSearchingMoveMatrix();
+    bool checkDetection(int &x, int &y, EntityType &detectedObject);
     void moveAwayFrom(int &x, int &y, int &xAway, int &yAway);
+    bool checkIfOutOfNest();
+    std::vector<float> calcReturningMoveMatrix();
     
     BotMode _mode;
     float _range;

@@ -19,11 +19,10 @@ public:
     Pile(int id, int size, float bias, int pieces); // Constructor
     // TODO: find correct format for this function declaration
     //double bias() override; // overriden function to calculate the bias
-    void removePiece(); // function to remove a single piece from pile
-    void removePile(); // function to remove rendered pile from the world
     void simulate();
     void exist();
     PileStock getPileStock() { return _stock; }
+    void removePiece() { _pieces--; }; // Method to add to the collected tally and switch a bot to searching
 
     // miscellaneous
     std::shared_ptr<Pile> get_shared_this() { return shared_from_this(); }

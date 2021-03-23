@@ -9,6 +9,7 @@ Obstacle::Obstacle(int id, int size, float bias)
     _bias = bias;
     _timeOn = 0;
     _color = cv::Scalar(0,0,0); // BLACK (b,g,r)
+    _flag = false;
 }
 
 void Obstacle::simulate()

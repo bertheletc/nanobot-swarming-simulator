@@ -11,6 +11,7 @@ Pile::Pile(int id, int size, float bias, int pieces)
     _bias = bias;
     _pieces = pieces;
     _timeOn = 0;
+    _flag = false;
 }
 
 void Pile::simulate()

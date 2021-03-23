@@ -33,6 +33,8 @@ public:
     EntityType getType() { return _type; }
     int getSizeRadius() { return _sizeRadius; }
     cv::Scalar getColor() { return _color; }
+    void turnOnFlag() { _flag = true; }
+    bool getFlag() { return _flag; }
 
 protected:
     virtual void simulate(){}; // method to be overriden by each child class
@@ -41,7 +43,8 @@ protected:
     int _id;                          // every traffic object has its own unique id
     int _posX, _posY;              // vehicle position in pixels
     cv::Scalar _color; // rendered color of object
-    int _sizeRadius; // represents the size of the object (all objects are circles) 
+    int _sizeRadius; // represents the size of the object (all objects are circles)
+    bool _flag; 
 
     std::vector<std::thread> _threads; // holds all threads that have been launched within this object
     static std::mutex _mtx;           // mutex shared by all traffic objects for protecting cout 
